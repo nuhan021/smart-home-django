@@ -1,0 +1,13 @@
+# .env
+
+# Virtual environment
+venv/
+
+# Byte-compiled / cached
+__pycache__/
+*.pyc
+*.pyo
+
+
+db.sqlite3
+
