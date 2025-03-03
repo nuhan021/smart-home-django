@@ -12,5 +12,7 @@ urlpatterns = [
     path('token/', Access_token.as_view(), name="access token"),
 
     path('user/', Auth_user.as_view(), name= "user"),
+
+    path('local-ip/', Update_local_ip.as_view(), name="Update local ip")
     
 ]

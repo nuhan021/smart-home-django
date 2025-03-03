@@ -3,9 +3,8 @@ from django.contrib.auth.models import BaseUserManager, AbstractBaseUser
 from django.core.exceptions import ValidationError
 from django.utils.translation import gettext_lazy as _
 from django.utils.timezone import now, timedelta
-from django.contrib.auth.hashers import make_password
 from django.utils.timezone import now, timedelta
-import uuid
+
 
 
 # user data base model
@@ -37,6 +36,7 @@ class User(AbstractBaseUser):
     is_active = models.BooleanField(default=True)
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
+    local_ip = models.CharField(max_length=25, default="0.0.0.0")
 
     objects = UserManager()
 
@@ -61,6 +61,9 @@ class User(AbstractBaseUser):
         user.set_password(new_password)
         user.save()
         return user
+    
+    
+
 
     def __str__(self):
         return self.email

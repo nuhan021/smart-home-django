@@ -37,6 +37,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'authentication',
     'control_pin',
+    "django_celery_beat"
 ]
 
 MIDDLEWARE = [
@@ -77,6 +78,8 @@ CHANNEL_LAYERS = {
         # "CONFIG": {
         #     "hosts": [("127.0.0.1", 6379)],  # Redis সার্ভার
         # },
+
+   
     },
 }
 REST_FRAMEWORK = {
@@ -182,3 +185,11 @@ ACCOUNT_EMAIL_VERIFICATION = 'mandatory'  # Ensures email verification
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
 
 SITE_ID = 1
+
+
+CELERY_BEAT_SCHEDULE = {
+    "deactivate_inactive_devices": {
+        "task": "control_pin.tasks.deactivate_inactive_devices",
+        "schedule": timedelta(seconds=60),  # প্রতি ১ মিনিটে রান হবে
+    },
+}

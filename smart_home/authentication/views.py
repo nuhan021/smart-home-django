@@ -13,6 +13,7 @@ from django.contrib.auth.password_validation import validate_password
 from rest_framework.permissions import IsAuthenticated
 from django.contrib.auth.hashers import make_password
 import secrets
+from django.core.validators import validate_ipv4_address
 
 
 
@@ -424,17 +425,17 @@ class Access_token(APIView):
         try:
             user = User.objects.get(id=decoded_token['user_id'])
         except User.DoesNotExist:
-            response = JsonResponse.error(
+            return JsonResponse.error(
                 code=401,
                 message="Invalid token",
                 errors={
                     "email": [ "Invalid authentication credentials."]
                 }
             )
-            return response
+            
         
         refresh = RefreshToken.for_user(user)
-        response = JsonResponse.success(
+        return JsonResponse.success(
             code=201,
             message="Access token",
             data={
@@ -442,8 +443,6 @@ class Access_token(APIView):
                 "access": str(refresh.access_token),
             }
         )
-
-        return response
 
 
 # # verify using access token before access user info
@@ -489,20 +488,65 @@ class Auth_user(APIView):
                     'email': user.email,
                     'name': user.name,
                     'created_at': user.created_at,
+                    'local_ip': user.local_ip,
                 },
                 "pins": {
-                    "pin1_state": user_pins.pin1_state,
-                    "pin2_state": user_pins.pin2_state,
-                    "pin3_state": user_pins.pin3_state,
-                    "pin4_state": user_pins.pin4_state,
-                    "pin5_state": user_pins.pin5_state,
-                    "pin6_state": user_pins.pin6_state,
-                    "pin7_state": user_pins.pin7_state,
-                    "pin8_state": user_pins.pin8_state,
+                    "pin_1":user_pins.pin_1,
+                    "pin_2":user_pins.pin_2,
+                    "pin_3":user_pins.pin_3,
+                    "pin_4":user_pins.pin_4,
+                    "pin_5":user_pins.pin_5,
+                    "pin_6":user_pins.pin_6,
+                    "pin_7":user_pins.pin_7,
+                    "pin_8":user_pins.pin_8,
                 }
             }
         )
 
 
+class Update_local_ip(APIView) :
+    
+    def post(self, request):
+        api_key = request.query_params.get("api-key")
+        local_ip = request.query_params.get("local-ip")
+        try :
+            user = User.objects.get(api_key = api_key)
+        except User.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "api-key": ["invalid api key"]
+                }
+            )
+        
 
+        try:
+            validate_ipv4_address(local_ip)  
+            user = User.objects.get(email=user.email)
+        except User.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "api-key": ["invalid Email"]
+                }
+            )
+        except ValidationError:
+            return JsonResponse.error(
+                code=401,
+                message="Invalid ip address format",
+                errors={
+                    "ip": ["invalid ip"]
+                }
+            )
 
+        user.local_ip = local_ip
+        user.save()
+        return JsonResponse.success(
+            code=200,
+            message="Successfully updated",
+            data= {
+                "ip": user.local_ip
+            }
+        )
