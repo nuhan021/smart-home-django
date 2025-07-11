@@ -11,9 +11,10 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.contrib.auth.password_validation import validate_password
 from rest_framework.permissions import IsAuthenticated
-from django.contrib.auth.hashers import make_password
 import secrets
 from django.core.validators import validate_ipv4_address
+from datetime import time
+from django.utils.dateparse import parse_time
 
 
 
@@ -489,16 +490,126 @@ class Auth_user(APIView):
                     'name': user.name,
                     'created_at': user.created_at,
                     'local_ip': user.local_ip,
+                    'api_key': user.api_key,
+                    'local_wifi': user.local_wifi,
                 },
-                "pins": {
-                    "pin_1":user_pins.pin_1,
-                    "pin_2":user_pins.pin_2,
-                    "pin_3":user_pins.pin_3,
-                    "pin_4":user_pins.pin_4,
-                    "pin_5":user_pins.pin_5,
-                    "pin_6":user_pins.pin_6,
-                    "pin_7":user_pins.pin_7,
-                    "pin_8":user_pins.pin_8,
+                "pins": [
+                    {"pin_1":user_pins.pin_1},
+                    {"pin_2":user_pins.pin_2},
+                    {"pin_3":user_pins.pin_3},
+                    {"pin_4":user_pins.pin_4},
+                    {"pin_5":user_pins.pin_5},
+                    {"pin_6":user_pins.pin_6},
+                    {"pin_7":user_pins.pin_7},
+                    {"pin_8":user_pins.pin_8},
+                    {"pin_9":user_pins.pin_9},
+                    {"pin_10":user_pins.pin_10},
+                    {"pin_11":user_pins.pin_11},
+                    {"pin_12":user_pins.pin_12},
+                    {"pin_13":user_pins.pin_13},
+                    {"pin_14":user_pins.pin_14},
+                    {"pin_15":user_pins.pin_15},
+                    {"pin_16":user_pins.pin_16},
+                ],
+                "pwms": 
+                [
+                    {"pwm_1": user_pins.pwm_1},
+                    {"pwm_2": user_pins.pwm_2},
+                    {"pwm_3": user_pins.pwm_3},
+                    {"pwm_4": user_pins.pwm_4},
+                ],
+
+                "pins-schedule":{
+                        "on": [
+                            {"pin_1": user_pins.pin_1_on_time},
+                            {"pin_2": user_pins.pin_2_on_time},
+                            {"pin_3": user_pins.pin_3_on_time},
+                            {"pin_4": user_pins.pin_4_on_time},
+                            {"pin_5": user_pins.pin_5_on_time},
+                            {"pin_6": user_pins.pin_6_on_time},
+                            {"pin_7": user_pins.pin_7_on_time},
+                            {"pin_8": user_pins.pin_8_on_time},
+                            {"pin_9": user_pins.pin_9_on_time},
+                            {"pin_10": user_pins.pin_10_on_time},
+                            {"pin_11": user_pins.pin_11_on_time},
+                            {"pin_12": user_pins.pin_12_on_time},
+                            {"pin_13": user_pins.pin_13_on_time},
+                            {"pin_14": user_pins.pin_14_on_time},
+                            {"pin_15": user_pins.pin_15_on_time},
+                            {"pin_16": user_pins.pin_16_on_time},
+                        ],
+
+                        "off": [
+                            {"pin_1": user_pins.pin_1_off_time},
+                            {"pin_2": user_pins.pin_2_off_time},
+                            {"pin_3": user_pins.pin_3_off_time},
+                            {"pin_4": user_pins.pin_4_off_time},
+                            {"pin_5": user_pins.pin_5_off_time},
+                            {"pin_6": user_pins.pin_6_off_time},
+                            {"pin_7": user_pins.pin_7_off_time},
+                            {"pin_8": user_pins.pin_8_off_time},
+                            {"pin_9": user_pins.pin_9_off_time},
+                            {"pin_10": user_pins.pin_10_off_time},
+                            {"pin_11": user_pins.pin_11_off_time},
+                            {"pin_12": user_pins.pin_12_off_time},
+                            {"pin_13": user_pins.pin_13_off_time},
+                            {"pin_14": user_pins.pin_14_off_time},
+                            {"pin_15": user_pins.pin_15_off_time},
+                            {"pin_16": user_pins.pin_16_off_time},
+                        ]
+                    },
+
+                "rooms": {
+                    "living_room": user_pins.living_room,
+                    "dining": user_pins.dining,
+                    "bedroom1": user_pins.bedroom1,
+                    "bedroom2": user_pins.bedroom2,
+                    "bedroom3": user_pins.bedroom3,
+                    "kitchen": user_pins.kitchen,
+                    "balcony": user_pins.balcony,
+                    "corridor": user_pins.corridor,
+                },
+                "pins-details": {
+                    "title": [
+                        user_pins.pin_1_title,
+                        user_pins.pin_2_title,
+                        user_pins.pin_3_title,
+                        user_pins.pin_4_title,
+                        user_pins.pin_5_title,
+                        user_pins.pin_6_title,
+                        user_pins.pin_7_title,
+                        user_pins.pin_8_title,
+                        user_pins.pin_9_title,
+                        user_pins.pin_10_title,
+                        user_pins.pin_11_title,
+                        user_pins.pin_12_title,
+                        user_pins.pin_13_title,
+                        user_pins.pin_14_title,
+                        user_pins.pin_15_title,
+                        user_pins.pin_16_title,
+                    ],
+
+                    
+                    "subtitle": [
+                        user_pins.pin_1_subTitle,
+                        user_pins.pin_2_subTitle,
+                        user_pins.pin_3_subTitle,
+                        user_pins.pin_4_subTitle,
+                        user_pins.pin_5_subTitle,
+                        user_pins.pin_6_subTitle,
+                        user_pins.pin_7_subTitle,
+                        user_pins.pin_8_subTitle,
+                        user_pins.pin_9_subTitle,
+                        user_pins.pin_10_subTitle,
+                        user_pins.pin_11_subTitle,
+                        user_pins.pin_12_subTitle,
+                        user_pins.pin_13_subTitle,
+                        user_pins.pin_14_subTitle,
+                        user_pins.pin_15_subTitle,
+                        user_pins.pin_16_subTitle,
+                    ],
+
+                    "used_room_pin": user_pins.used_pin_list
                 }
             }
         )
@@ -548,5 +659,329 @@ class Update_local_ip(APIView) :
             message="Successfully updated",
             data= {
                 "ip": user.local_ip
+            }
+        )
+
+
+class Add_device(APIView):
+    def post(self, request):
+        api_key = request.data.get("api-key")
+        local_wifi = request.data.get("local-wifi")
+
+        if (not api_key or not local_wifi):
+            return JsonResponse.error(
+                code=400,
+                message="Field can't be empty",
+                errors={
+                    "field": ["empty field"]
+                }
+            )
+
+        try :
+            user = User.objects.get(api_key = api_key)
+        except User.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "api-key": ["invalid api key"]
+                }
+            )
+        
+        user.local_wifi = local_wifi
+        user.save()
+        return JsonResponse.success(
+            code=200,
+            message="Added new device",
+            data= {
+                "locl_wifi": user.local_wifi
+            }
+        )
+    
+
+
+class Edit_pin_details(APIView):
+    def post(self, request):
+        api_key = request.data.get("api-key")
+        pin_key = request.data.get("pin-key") # pin key mens like -> pin_key = pin_1_title or pin_key = pin_1_subTitle
+        string = request.data.get("string") # pin title or pin subtitle both can be updated by one single api
+
+        if (not api_key or not pin_key or not string):
+            return JsonResponse.error(
+                code=400,
+                message="Field can't be empty",
+                errors={
+                    "field": ["empty field"]
+                }
+            )
+        
+        try :
+            user = User.objects.get(api_key = api_key)
+        except User.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "api-key": ["invalid api key"]
+                }
+            )
+        
+        try:
+            pin = Pin.objects.get(email=user.email)
+        except Pin.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "email": "no email found"
+                }
+            )
+        
+        if not hasattr(pin, pin_key):
+            return JsonResponse.error(
+                code=400,
+                message=f"Invalid pin-key: {pin_key}",
+                errors= {"pin-key": ["Field does not exist"]}
+            )
+        
+        setattr(pin, pin_key, string)
+        pin.save()
+        
+
+        return JsonResponse.success(
+            code=200,
+            message= "Title updated successfully",
+            data= {
+                "updated_key": pin_key,
+                "new_value": string
+            }
+        )
+    
+
+class Add_room_switch(APIView):
+    def post(self, request):
+        api_key = request.data.get("api-key")
+        pin_key = request.data.get("pin-key")
+        room = request.data.get("room")
+
+        if (not api_key or not pin_key or not room):
+            return JsonResponse.error(
+                code=400,
+                message="Field can't be empty",
+                errors={
+                    "field": ["empty field"]
+                }
+            )
+        
+        try :
+            user = User.objects.get(api_key = api_key)
+        except User.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "api-key": ["invalid api key"]
+                }
+            )
+        
+        try:
+            pin = Pin.objects.get(email=user.email)
+        except Pin.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "email": "no email found"
+                }
+            )
+        
+        if not hasattr(pin, room):
+            return JsonResponse.error(
+                code=400,
+                message=f"Invalid room {room}",
+                errors= {"room": ["Field does not exist"]}
+            )
+        
+        room_switch_list = getattr(pin, room)
+        if (pin_key in room_switch_list):
+            return JsonResponse.error(
+                code=400,
+                message="This switch already added before",
+                errors= {"room": ["Field already exist"]}
+            )
+
+        if (pin_key not in room_switch_list):
+            room_switch_list.append(pin_key)
+            setattr(pin, room, room_switch_list)
+
+        if pin_key not in pin.used_pin_list:
+            pin.used_pin_list.append(pin_key)
+
+        pin.save()
+
+        return JsonResponse.success(
+            code=200,
+            message="Pin added to room successfully",
+            data={
+                "room": room,
+                "added-pin": pin_key,
+            }
+        )
+    
+
+class Remove_room_switch(APIView):
+    def post(self, request):
+        api_key = request.data.get("api-key")
+        pin_key = request.data.get("pin-key")
+        room = request.data.get("room")
+
+        if (not api_key or not pin_key or not room):
+            return JsonResponse.error(
+                code=400,
+                message="Field can't be empty",
+                errors={
+                    "field": ["empty field"]
+                }
+            )
+        
+        try :
+            user = User.objects.get(api_key = api_key)
+        except User.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "api-key": ["invalid api key"]
+                }
+            )
+        
+        try:
+            pin = Pin.objects.get(email=user.email)
+        except Pin.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={
+                    "email": "no email found"
+                }
+            )
+        
+        if not hasattr(pin, room):
+            return JsonResponse.error(
+                code=400,
+                message=f"Invalid room {room}",
+                errors= {"room": ["Field does not exist"]}
+            )
+        
+        room_switch_list = getattr(pin, room)
+        
+
+        if (pin_key not in room_switch_list):
+            return JsonResponse.error(
+                code=400,
+                message="This switch not added before",
+                errors= {"pin-key": ["Field does not exist"]}
+            )
+            
+
+        if (pin_key in room_switch_list):
+            room_switch_list.remove(pin_key)
+            setattr(pin, room, room_switch_list)
+
+        if pin_key in pin.used_pin_list:
+            pin.used_pin_list.remove(pin_key)
+
+        pin.save()
+
+        return JsonResponse.success(
+            code=200,
+            message="Pin added to room successfully",
+            data={
+                "room": room,
+                "added_pin": pin_key,
+            }
+        )
+    
+
+class Set_time_for_pin(APIView):
+    def post(self, request):
+        api_key = request.data.get("api-key")
+        pin_key = request.data.get("pin-key")
+        on_time_str = request.data.get("on-time")
+        off_time_str = request.data.get("off-time")
+        reset = request.data.get("reset", False)
+
+        if not all([api_key, pin_key]):
+            return JsonResponse.error(
+                code=400,
+                message="api-key and pin-key are required",
+                errors={"field": ["api-key or pin-key missing"]}
+            )
+
+        try:
+            user = User.objects.get(api_key=api_key)
+        except User.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No user found",
+                errors={"api-key": ["invalid api key"]}
+            )
+
+        try:
+            pin = Pin.objects.get(email=user.email)
+        except Pin.DoesNotExist:
+            return JsonResponse.error(
+                code=401,
+                message="No pin data found",
+                errors={"email": "no pin associated with this user"}
+            )
+
+        if not hasattr(pin, pin_key):
+            return JsonResponse.error(
+                code=400,
+                message=f"Invalid pin {pin_key}",
+                errors={"pin": ["Field does not exist"]}
+            )
+
+        # ✅ Reset timer if requested
+        if reset:
+            setattr(pin, f"{pin_key}_on_time", None)
+            setattr(pin, f"{pin_key}_off_time", None)
+            pin.save()
+            return JsonResponse.success(
+                code=200,
+                message="Pin timer reset successfully",
+                data={"pin": pin_key}
+            )
+
+        # ✅ Otherwise, update with given times
+        if not all([on_time_str, off_time_str]):
+            return JsonResponse.error(
+                code=400,
+                message="on-time and off-time required unless reset is true",
+                errors={"time": ["missing on-time or off-time"]}
+            )
+
+        try:
+            on_time = parse_time(on_time_str)
+            off_time = parse_time(off_time_str)
+        except:
+            return JsonResponse.error(
+                code=400,
+                message="Invalid time format",
+                errors={"time": ["Use HH:MM:SS format"]}
+            )
+
+        setattr(pin, f"{pin_key}_on_time", on_time)
+        setattr(pin, f"{pin_key}_off_time", off_time)
+        pin.save()
+
+        return JsonResponse.success(
+            code=200,
+            message="Pin time updated successfully",
+            data={
+                "pin": pin_key,
+                "on_time": on_time_str,
+                "off_time": off_time_str
             }
         )

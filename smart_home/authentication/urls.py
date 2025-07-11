@@ -13,6 +13,14 @@ urlpatterns = [
 
     path('user/', Auth_user.as_view(), name= "user"),
 
-    path('local-ip/', Update_local_ip.as_view(), name="Update local ip")
+    path('local-ip/', Update_local_ip.as_view(), name="Update local ip"),
+    path('add-device/', Add_device.as_view(), name='add new device'),
+
+    path('edit-pin-details/', Edit_pin_details.as_view(), name='Edit-details'),
+
+    path('add-room-switch/', Add_room_switch.as_view(), name='add room switch'),
+    path('remove-room-switch/', Remove_room_switch.as_view(), name='remove room switch'),
+
+    path('set-time/', Set_time_for_pin.as_view(), name='Set time'),
     
 ]
