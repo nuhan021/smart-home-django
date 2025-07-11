@@ -37,6 +37,7 @@ class User(AbstractBaseUser):
     is_staff = models.BooleanField(default=False)
     is_superuser = models.BooleanField(default=False)
     local_ip = models.CharField(max_length=25, default="0.0.0.0")
+    local_wifi = models.CharField(max_length=255, default="No WiFi")
 
     objects = UserManager()
 

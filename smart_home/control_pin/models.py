@@ -20,6 +20,78 @@ class Pin(models.Model):
     pin_13 = models.BooleanField(default=False)
     pin_14 = models.BooleanField(default=False)
     pin_15 = models.BooleanField(default=False)
+    pin_16 = models.BooleanField(default=False)
+
+    # pins title
+    pin_1_title = models.CharField(max_length=255, default='Switch')
+    pin_2_title = models.CharField(max_length=255, default='Switch')
+    pin_3_title = models.CharField(max_length=255, default='Switch')
+    pin_4_title = models.CharField(max_length=255, default='Switch')
+    pin_5_title = models.CharField(max_length=255, default='Switch')
+    pin_6_title = models.CharField(max_length=255, default='Switch')
+    pin_7_title = models.CharField(max_length=255, default='Switch')
+    pin_8_title = models.CharField(max_length=255, default='Switch')
+    pin_9_title = models.CharField(max_length=255, default='Switch')
+    pin_10_title = models.CharField(max_length=255, default='Switch')
+    pin_11_title = models.CharField(max_length=255, default='Switch')
+    pin_12_title = models.CharField(max_length=255, default='Switch')
+    pin_13_title = models.CharField(max_length=255, default='Switch')
+    pin_14_title = models.CharField(max_length=255, default='Switch')
+    pin_15_title = models.CharField(max_length=255, default='Switch')
+    pin_16_title = models.CharField(max_length=255, default='Switch')
+
+    # pins subtitle
+    pin_1_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_2_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_3_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_4_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_5_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_6_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_7_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_8_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_9_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_10_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_11_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_12_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_13_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_14_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_15_subTitle = models.CharField(max_length=255, default='Just a switch')
+    pin_16_subTitle = models.CharField(max_length=255, default='Just a switch')
+
+    #pins time
+    pin_1_on_time = models.TimeField(null=True, blank=True)
+    pin_2_on_time = models.TimeField(null=True, blank=True)
+    pin_3_on_time = models.TimeField(null=True, blank=True)
+    pin_4_on_time = models.TimeField(null=True, blank=True)
+    pin_5_on_time = models.TimeField(null=True, blank=True)
+    pin_6_on_time = models.TimeField(null=True, blank=True)
+    pin_7_on_time = models.TimeField(null=True, blank=True)
+    pin_8_on_time = models.TimeField(null=True, blank=True)
+    pin_9_on_time = models.TimeField(null=True, blank=True)
+    pin_10_on_time = models.TimeField(null=True, blank=True)
+    pin_11_on_time = models.TimeField(null=True, blank=True)
+    pin_12_on_time = models.TimeField(null=True, blank=True)
+    pin_13_on_time = models.TimeField(null=True, blank=True)
+    pin_14_on_time = models.TimeField(null=True, blank=True)
+    pin_15_on_time = models.TimeField(null=True, blank=True)
+    pin_16_on_time = models.TimeField(null=True, blank=True)
+
+    pin_1_off_time = models.TimeField(null=True, blank=True)
+    pin_2_off_time = models.TimeField(null=True, blank=True)
+    pin_3_off_time = models.TimeField(null=True, blank=True)
+    pin_4_off_time = models.TimeField(null=True, blank=True)
+    pin_5_off_time = models.TimeField(null=True, blank=True)
+    pin_6_off_time = models.TimeField(null=True, blank=True)
+    pin_7_off_time = models.TimeField(null=True, blank=True)
+    pin_8_off_time = models.TimeField(null=True, blank=True)
+    pin_9_off_time = models.TimeField(null=True, blank=True)
+    pin_10_off_time = models.TimeField(null=True, blank=True)
+    pin_11_off_time = models.TimeField(null=True, blank=True)
+    pin_12_off_time = models.TimeField(null=True, blank=True)
+    pin_13_off_time = models.TimeField(null=True, blank=True)
+    pin_14_off_time = models.TimeField(null=True, blank=True)
+    pin_15_off_time = models.TimeField(null=True, blank=True)
+    pin_16_off_time = models.TimeField(null=True, blank=True)
 
 
     #PWM values
@@ -28,5 +100,18 @@ class Pin(models.Model):
     pwm_3 = models.IntegerField(default=0)
     pwm_4 = models.IntegerField(default=0)
 
+
+     # Store pin list per room
+    living_room = models.JSONField(default=list, blank=True)
+    dining = models.JSONField(default=list, blank=True)
+    bedroom1 = models.JSONField(default=list, blank=True)
+    bedroom2 = models.JSONField(default=list, blank=True)
+    bedroom3 = models.JSONField(default=list, blank=True)
+    kitchen = models.JSONField(default=list, blank=True)
+    balcony = models.JSONField(default=list, blank=True)
+    corridor = models.JSONField(default=list, blank=True)
+
+    # used pin in a tab bar list
+    used_pin_list = models.JSONField(default=list, blank=True)
     def __str__(self):
         return self.email

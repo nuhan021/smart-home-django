@@ -23,7 +23,7 @@ class MyConsumer(AsyncWebsocketConsumer):
         try:
             self.user = await sync_to_async(User.objects.get)(api_key=api_key)
             self.pin = await sync_to_async(Pin.objects.get)(email = self.user.email)
-            self.group_name = self.user.name + str(self.user.id)
+            self.group_name = self.user.api_key + str(self.user.id)
 
             await self.channel_layer.group_add(
                 self.group_name,
@@ -53,6 +53,7 @@ class MyConsumer(AsyncWebsocketConsumer):
                                     {"pin_13": self.pin.pin_13},
                                     {"pin_14": self.pin.pin_14},
                                     {"pin_15": self.pin.pin_15},
+                                    {"pin_16": self.pin.pin_16},
                                 ],
                         "pwms": [
                             {"pwm_1": self.pin.pwm_1},
@@ -127,6 +128,8 @@ class MyConsumer(AsyncWebsocketConsumer):
                         "pins": filtered_pin_data
                     })}
                 )
+
+
 
             if filtered_pwm_data:
                 for item in filtered_pwm_data:
