@@ -7,7 +7,7 @@ from django.contrib.auth.password_validation import validate_password
 class UserSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
-        fields = ['id', 'email', 'password', 'name', 'api_key']
+        fields = ['id', 'email', 'password', 'name', 'api_key', 'local_wifi']
         extra_kwargs = {
             'password': {'write_only': True},
             # 'api_key': {'write_only': True},

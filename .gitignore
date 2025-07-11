@@ -11,3 +11,5 @@ __pycache__/
 
 db.sqlite3
 
+config.bat
+node_modules
